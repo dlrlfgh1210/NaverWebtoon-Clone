@@ -128,5 +128,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-//issue에다가 commit 연습하기

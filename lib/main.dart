@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:naverwebtoon_clone/home/home_screen.dart';
+import 'package:naverwebtoon_clone/main_navigation_screen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -11,10 +13,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
+      home: MainNavigationScreen(),
     );
   }
 }
