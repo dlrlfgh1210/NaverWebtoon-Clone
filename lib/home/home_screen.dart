@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:naverwebtoon_clone/constant/breakpoints.dart';
 import 'package:naverwebtoon_clone/constant/gaps.dart';
 import 'package:naverwebtoon_clone/constant/sizes.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 final tabs = [
   "신작",
@@ -17,8 +18,6 @@ final tabs = [
   "완결",
 ];
 
-final PageController pageController = PageController(initialPage: 0);
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -27,6 +26,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  PageController pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,28 +52,54 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               SliverToBoxAdapter(
-                child: Container(
-                  height: 200,
-                  child: PageView(
-                    scrollDirection: Axis.horizontal,
-                    controller: pageController,
-                    children: [
-                      Image.network(
-                        "https://cdn.pixabay.com/photo/2017/09/25/13/12/puppy-2785074_960_720.jpg",
-                        fit: BoxFit.fill,
+                child: Column(
+                  children: [
+                    AspectRatio(
+                      aspectRatio: 2,
+                      child: PageView(
+                        scrollDirection: Axis.horizontal,
+                        controller: pageController,
+                        children: [
+                          /*  SmoothPageIndicator(
+                            controller: pageController,
+                            count: 3,
+                            effect: const WormEffect(
+                              dotColor: Colors.grey,
+                              activeDotColor: Colors.purple,
+                              radius: 5,
+                              dotHeight: 10,
+                              dotWidth: 10,
+                            ),
+                          ),*/
+                          Image.network(
+                            "https://cdn.pixabay.com/photo/2017/09/25/13/12/puppy-2785074_960_720.jpg",
+                            fit: BoxFit.cover,
+                          ),
+                          Image.network(
+                            "https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_960_720.jpg",
+                            fit: BoxFit.fill,
+                          ),
+                          Image.network(
+                            "https://cdn.pixabay.com/photo/2016/02/18/18/37/puppy-1207816_960_720.jpg",
+                            fit: BoxFit.fill,
+                          ),
+                        ],
                       ),
-                      Image.network(
-                        "https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_960_720.jpg",
-                        fit: BoxFit.fill,
+                    ),
+                    SmoothPageIndicator(
+                      controller: pageController,
+                      count: 3,
+                      effect: const WormEffect(
+                        dotColor: Colors.grey,
+                        activeDotColor: Colors.purple,
+                        radius: 5,
+                        dotHeight: 10,
+                        dotWidth: 10,
                       ),
-                      Image.network(
-                        "https://cdn.pixabay.com/photo/2016/02/18/18/37/puppy-1207816_960_720.jpg",
-                        fit: BoxFit.fill,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              )
+              ),
             ];
           },
           body: TabBarView(
