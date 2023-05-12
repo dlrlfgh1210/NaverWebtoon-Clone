@@ -1,5 +1,7 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loop_page_view/loop_page_view.dart';
 import 'package:naverwebtoon_clone/constant/gaps.dart';
 import 'package:naverwebtoon_clone/constant/sizes.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -26,7 +28,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentPageIndex = 0;
-  PageController pageController = PageController(initialPage: 0);
+  PageController pageController = PageController();
+  LoopPageController loopPageController = LoopPageController();
   List<String> pageImage = [
     "https://cdn.pixabay.com/photo/2017/09/25/13/12/puppy-2785074_960_720.jpg",
     "https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_960_720.jpg",
@@ -70,9 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Stack(
                         alignment: Alignment.topRight,
                         children: [
-                          PageView.builder(
+                          LoopPageView.builder(
                             scrollDirection: Axis.horizontal,
-                            controller: pageController,
+                            controller: loopPageController,
                             onPageChanged: (value) {
                               setState(() {
                                 currentPageIndex = value;
@@ -103,17 +106,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    SmoothPageIndicator(
-                      controller: pageController,
-                      count: pageImage.length,
-                      effect: const WormEffect(
-                        dotColor: Colors.grey,
-                        activeDotColor: Colors.purple,
-                        radius: 5,
-                        dotHeight: 10,
-                        dotWidth: 10,
-                      ),
-                    ),
+                   DotsIndicator(
+                       dotsCount: pageImage.length,
+                   position: currentPageIndex,
+                   decorator: const DotsDecorator(
+                     color: Colors.grey,
+                     activeColor: Colors.purple
+                   ),)
                   ],
                 ),
               ),

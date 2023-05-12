@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  dots_indicator:
+    dependency: "direct main"
+    description:
+      name: dots_indicator
+      sha256: "58b6a365744aa62aa1b70c4ea29e5106fbe064f5edaf7e9652e9b856edbfd9bb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -120,6 +128,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  loop_page_view:
+    dependency: "direct main"
+    description:
+      name: loop_page_view
+      sha256: "27d7b9d627c36ba6bd3b5e603008474531c7e10e795a4f9cbc0ac396fb5eb972"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.1"
   matcher:
     dependency: transitive
     description:
