@@ -1,6 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:naverwebtoon_clone/constant/breakpoints.dart';
 import 'package:naverwebtoon_clone/constant/gaps.dart';
 import 'package:naverwebtoon_clone/constant/sizes.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -26,6 +27,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  int currentPageIndex = 0;
   PageController pageController = PageController();
 
   @override
@@ -40,14 +43,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 actions: [
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.cookie, color: Colors.amber, size: 20),
+                    icon:
+                        const Icon(Icons.cookie, color: Colors.amber, size: 20),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 50,
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.search, color: Colors.white, size: 20),
+                    icon:
+                        const Icon(Icons.search, color: Colors.white, size: 20),
                   ),
                 ],
               ),
@@ -56,33 +61,46 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     AspectRatio(
                       aspectRatio: 2,
-                      child: PageView(
-                        scrollDirection: Axis.horizontal,
-                        controller: pageController,
+                      child: Stack(
+                        alignment: Alignment.topRight,
                         children: [
-                          /*  SmoothPageIndicator(
+                          PageView(
+                            scrollDirection: Axis.horizontal,
                             controller: pageController,
-                            count: 3,
-                            effect: const WormEffect(
-                              dotColor: Colors.grey,
-                              activeDotColor: Colors.purple,
-                              radius: 5,
-                              dotHeight: 10,
-                              dotWidth: 10,
+                            onPageChanged: (value) {
+                              setState(() {
+                                currentPageIndex = value;
+                              });
+                            },
+                            children: [
+                              Image.network(
+                                "https://cdn.pixabay.com/photo/2017/09/25/13/12/puppy-2785074_960_720.jpg",
+                                fit: BoxFit.fill,
+                              ),
+                              Image.network(
+                                "https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_960_720.jpg",
+                                fit: BoxFit.fill,
+                              ),
+                              Image.network(
+                                "https://cdn.pixabay.com/photo/2016/02/18/18/37/puppy-1207816_960_720.jpg",
+                                fit: BoxFit.fill,
+                              ),
+                            ],
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 5,
+                              horizontal: 10,
                             ),
-                          ),*/
-                          Image.network(
-                            "https://cdn.pixabay.com/photo/2017/09/25/13/12/puppy-2785074_960_720.jpg",
-                            fit: BoxFit.cover,
-                          ),
-                          Image.network(
-                            "https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_960_720.jpg",
-                            fit: BoxFit.fill,
-                          ),
-                          Image.network(
-                            "https://cdn.pixabay.com/photo/2016/02/18/18/37/puppy-1207816_960_720.jpg",
-                            fit: BoxFit.fill,
-                          ),
+                            margin: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.8),
+                                borderRadius: BorderRadius.circular(500)),
+                            child: Text(
+                              '${currentPageIndex+1} / 3',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          )
                         ],
                       ),
                     ),
