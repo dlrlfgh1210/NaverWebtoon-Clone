@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:naverwebtoon_clone/constant/gaps.dart';
@@ -27,9 +25,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   int currentPageIndex = 0;
-  PageController pageController = PageController();
+  PageController pageController = PageController(initialPage: 0);
+  List<String> pageImage = [
+    "https://cdn.pixabay.com/photo/2017/09/25/13/12/puppy-2785074_960_720.jpg",
+    "https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_960_720.jpg",
+    "https://cdn.pixabay.com/photo/2016/02/18/18/37/puppy-1207816_960_720.jpg",
+    "https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036_960_720.jpg",
+    "https://cdn.pixabay.com/photo/2019/02/06/15/18/puppy-3979350_960_720.jpg",
+    "https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg",
+    "https://newsimg.sedaily.com/2023/04/10/29O8ZA6BWK_1.jpg",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +66,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     AspectRatio(
-                      aspectRatio: 2,
+                      aspectRatio: 1,
                       child: Stack(
                         alignment: Alignment.topRight,
                         children: [
-                          PageView(
+                          PageView.builder(
                             scrollDirection: Axis.horizontal,
                             controller: pageController,
                             onPageChanged: (value) {
@@ -72,20 +78,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 currentPageIndex = value;
                               });
                             },
-                            children: [
-                              Image.network(
-                                "https://cdn.pixabay.com/photo/2017/09/25/13/12/puppy-2785074_960_720.jpg",
-                                fit: BoxFit.fill,
-                              ),
-                              Image.network(
-                                "https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_960_720.jpg",
-                                fit: BoxFit.fill,
-                              ),
-                              Image.network(
-                                "https://cdn.pixabay.com/photo/2016/02/18/18/37/puppy-1207816_960_720.jpg",
-                                fit: BoxFit.fill,
-                              ),
-                            ],
+                            itemCount: pageImage.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Image.network(
+                                pageImage[index],
+                                fit: BoxFit.cover,
+                              );
+                            },
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(
@@ -97,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.black.withOpacity(0.8),
                                 borderRadius: BorderRadius.circular(500)),
                             child: Text(
-                              '${currentPageIndex+1} / 3',
+                              '${currentPageIndex + 1} / ${pageImage.length}',
                               style: const TextStyle(color: Colors.white),
                             ),
                           )
@@ -106,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SmoothPageIndicator(
                       controller: pageController,
-                      count: 3,
+                      count: pageImage.length,
                       effect: const WormEffect(
                         dotColor: Colors.grey,
                         activeDotColor: Colors.purple,
