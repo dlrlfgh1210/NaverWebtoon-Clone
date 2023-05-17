@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:naverwebtoon_clone/constant/sizes.dart';
 
 /*final tabs = [
@@ -42,61 +41,61 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
         tabs: [
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size20,
+              horizontal: Sizes.size12,
             ),
             child: Text('신작'),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size20,
+              horizontal: Sizes.size12,
             ),
             child: Text('매일+'),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size20,
+              horizontal: Sizes.size12,
             ),
             child: Text('월'),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size20,
+              horizontal: Sizes.size12,
             ),
             child: Text('화'),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size20,
+              horizontal: Sizes.size12,
             ),
             child: Text('수'),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size20,
+              horizontal: Sizes.size12,
             ),
             child: Text('목'),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size20,
+              horizontal: Sizes.size12,
             ),
             child: Text('금'),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size20,
+              horizontal: Sizes.size12,
             ),
             child: Text('토'),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size20,
+              horizontal: Sizes.size12,
             ),
             child: Text('일'),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size20,
+              horizontal: Sizes.size12,
             ),
             child: Text('완결'),
           ),
