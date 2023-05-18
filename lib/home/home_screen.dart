@@ -6,8 +6,8 @@ import 'package:naverwebtoon_clone/constant/gaps.dart';
 import 'package:naverwebtoon_clone/constant/sizes.dart';
 import 'package:naverwebtoon_clone/models/today_webtoon_model.dart';
 import 'package:naverwebtoon_clone/persistent_tab_bar.dart';
-import 'package:naverwebtoon_clone/screens/detail_screen.dart';
 import 'package:naverwebtoon_clone/services/api_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final tabs = [
   "신작",
@@ -265,16 +265,9 @@ class _HomeScreenState extends State<HomeScreen> {
         var todayWebtoon = snapshotToday.data![index];
         return GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetailScreen(
-                  title: todayWebtoon.title,
-                  author: todayWebtoon.author,
-                  img: todayWebtoon.img,
-                  webtoonId: todayWebtoon.webtoonId,
-                  url: todayWebtoon.url,
-                ),
+            launchUrl(
+              Uri.parse(
+                'https://m.comic.naver.com/webtoon/list?titleId=${todayWebtoon.webtoonId.toString().substring(7, 13)}',
               ),
             );
           },
