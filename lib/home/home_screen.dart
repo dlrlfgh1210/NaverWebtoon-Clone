@@ -31,7 +31,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  final Future<List<TodayWebtoonModel>> today = ApiService.getTodayWebtoons();
+  final Future<List<TodayWebtoonModel>> monday = ApiService.getMondayWebtoons();
+  final Future<List<TodayWebtoonModel>> tuesday = ApiService.getTuesdayWebtoons();
+  final Future<List<TodayWebtoonModel>> wednesday = ApiService.getWednesdayWebtoons();
+  final Future<List<TodayWebtoonModel>> thursday = ApiService.getThursdayWebtoons();
+  final Future<List<TodayWebtoonModel>> friday = ApiService.getFridayWebtoons();
+  final Future<List<TodayWebtoonModel>> saturday = ApiService.getSaturdayWebtoons();
+  final Future<List<TodayWebtoonModel>> sunday = ApiService.getSundayWebtoons();
+  final Future<List<TodayWebtoonModel>> finished = ApiService.getFinishedWebtoons();
+  final Future<List<TodayWebtoonModel>> daily = ApiService.getDailyWebtoons();
   int currentPageIndex = 0;
 
   LoopPageController loopPageController = LoopPageController();
@@ -129,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
           body: TabBarView(
             children: [
                FutureBuilder(
-                 future: today,
+                 future: monday,
                 builder: (context, snapshotToday) {
                   if (snapshotToday.hasData) {
                     return makeTodayList(snapshotToday);
@@ -139,33 +147,96 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
-
-              const Center(
-                child: Text('매일+'),
+              FutureBuilder(
+                future: tuesday,
+                builder: (context, snapshotToday) {
+                  if (snapshotToday.hasData) {
+                    return makeTodayList(snapshotToday);
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+              FutureBuilder(
+                future: wednesday,
+                builder: (context, snapshotToday) {
+                  if (snapshotToday.hasData) {
+                    return makeTodayList(snapshotToday);
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+              FutureBuilder(
+                future: thursday,
+                builder: (context, snapshotToday) {
+                  if (snapshotToday.hasData) {
+                    return makeTodayList(snapshotToday);
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+              FutureBuilder(
+                future: friday,
+                builder: (context, snapshotToday) {
+                  if (snapshotToday.hasData) {
+                    return makeTodayList(snapshotToday);
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+              FutureBuilder(
+                future: saturday,
+                builder: (context, snapshotToday) {
+                  if (snapshotToday.hasData) {
+                    return makeTodayList(snapshotToday);
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+              FutureBuilder(
+                future: sunday,
+                builder: (context, snapshotToday) {
+                  if (snapshotToday.hasData) {
+                    return makeTodayList(snapshotToday);
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+              FutureBuilder(
+                future: finished,
+                builder: (context, snapshotToday) {
+                  if (snapshotToday.hasData) {
+                    return makeTodayList(snapshotToday);
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+              FutureBuilder(
+                future: daily,
+                builder: (context, snapshotToday) {
+                  if (snapshotToday.hasData) {
+                    return makeTodayList(snapshotToday);
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
               ),
               const Center(
-                child: Text('월요일'),
-              ),
-              const Center(
-                child: Text('화요일'),
-              ),
-              const Center(
-                child: Text('수요일'),
-              ),
-              const Center(
-                child: Text('목요일'),
-              ),
-              const Center(
-                child: Text('금요일'),
-              ),
-              const Center(
-                child: Text('토요일'),
-              ),
-              const Center(
-                child: Text('일요일'),
-              ),
-              const Center(
-                child: Text('완결'),
+                child: Text('신작'),
               ),
             ],
           ),
@@ -201,6 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   aspectRatio: 9 / 15,
                   child: Image.network(
                         todayWebtoon.img,
+                    headers: const {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",},
                   ),
                 ),
               ),

@@ -43,18 +43,6 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
             padding: EdgeInsets.symmetric(
               horizontal: Sizes.size12,
             ),
-            child: Text('신작'),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size12,
-            ),
-            child: Text('매일+'),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size12,
-            ),
             child: Text('월'),
           ),
           Padding(
@@ -98,6 +86,18 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
               horizontal: Sizes.size12,
             ),
             child: Text('완결'),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: Sizes.size12,
+            ),
+            child: Text('매일+'),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: Sizes.size12,
+            ),
+            child: Text('신작'),
           ),
         ],
       ),
