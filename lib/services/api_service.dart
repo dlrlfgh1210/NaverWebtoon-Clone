@@ -4,7 +4,7 @@ import 'package:naverwebtoon_clone/models/today_webtoon_model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static String baseUrl = "https://korea-webtoon-api.herokuapp.com/?service=naver&updateDay=";
+  static String baseUrl = "https://korea-webtoon-api.herokuapp.com/?perPage=20&service=naver&updateDay=";
   static String MondayWebtoon = "mon";
   static String TuesdayWebtoon= "tue";
   static String WednesdayWebtoon= "wed";

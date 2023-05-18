@@ -6,6 +6,7 @@ import 'package:naverwebtoon_clone/constant/gaps.dart';
 import 'package:naverwebtoon_clone/constant/sizes.dart';
 import 'package:naverwebtoon_clone/models/today_webtoon_model.dart';
 import 'package:naverwebtoon_clone/persistent_tab_bar.dart';
+import 'package:naverwebtoon_clone/screens/detail_screen.dart';
 import 'package:naverwebtoon_clone/services/api_service.dart';
 
 final tabs = [
@@ -22,23 +23,26 @@ final tabs = [
 ];
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
-
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final Future<List<TodayWebtoonModel>> monday = ApiService.getMondayWebtoons();
-  final Future<List<TodayWebtoonModel>> tuesday = ApiService.getTuesdayWebtoons();
-  final Future<List<TodayWebtoonModel>> wednesday = ApiService.getWednesdayWebtoons();
-  final Future<List<TodayWebtoonModel>> thursday = ApiService.getThursdayWebtoons();
+  final Future<List<TodayWebtoonModel>> tuesday =
+      ApiService.getTuesdayWebtoons();
+  final Future<List<TodayWebtoonModel>> wednesday =
+      ApiService.getWednesdayWebtoons();
+  final Future<List<TodayWebtoonModel>> thursday =
+      ApiService.getThursdayWebtoons();
   final Future<List<TodayWebtoonModel>> friday = ApiService.getFridayWebtoons();
-  final Future<List<TodayWebtoonModel>> saturday = ApiService.getSaturdayWebtoons();
+  final Future<List<TodayWebtoonModel>> saturday =
+      ApiService.getSaturdayWebtoons();
   final Future<List<TodayWebtoonModel>> sunday = ApiService.getSundayWebtoons();
-  final Future<List<TodayWebtoonModel>> finished = ApiService.getFinishedWebtoons();
+  final Future<List<TodayWebtoonModel>> finished =
+      ApiService.getFinishedWebtoons();
   final Future<List<TodayWebtoonModel>> daily = ApiService.getDailyWebtoons();
   int currentPageIndex = 0;
 
@@ -136,8 +140,8 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           body: TabBarView(
             children: [
-               FutureBuilder(
-                 future: monday,
+              FutureBuilder(
+                future: monday,
                 builder: (context, snapshotToday) {
                   if (snapshotToday.hasData) {
                     return makeTodayList(snapshotToday);
@@ -260,7 +264,20 @@ class _HomeScreenState extends State<HomeScreen> {
       itemBuilder: (context, index) {
         var todayWebtoon = snapshotToday.data![index];
         return GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailScreen(
+                  title: todayWebtoon.title,
+                  author: todayWebtoon.author,
+                  img: todayWebtoon.img,
+                  webtoonId: todayWebtoon.webtoonId,
+                  url: todayWebtoon.url,
+                ),
+              ),
+            );
+          },
           child: Column(
             children: [
               Container(
@@ -271,15 +288,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: AspectRatio(
                   aspectRatio: 9 / 15,
                   child: Image.network(
-                        todayWebtoon.img,
-                    headers: const {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",},
+                    todayWebtoon.img,
+                    headers: const {
+                      "User-Agent":
+                          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+                    },
                   ),
                 ),
               ),
               Gaps.v10,
               Text(
                 todayWebtoon.title,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: Sizes.size10,
                     fontWeight: FontWeight.bold,
                     height: 1.1),
@@ -301,9 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.grey.shade600,
                   ),
                   Gaps.h2,
-                  Text(
-                    "9.72"
-                  )
+                  const Text("9.72")
                 ],
               ),
             ],
