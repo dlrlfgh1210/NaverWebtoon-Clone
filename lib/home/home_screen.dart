@@ -1,4 +1,3 @@
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loop_page_view/loop_page_view.dart';
@@ -6,7 +5,9 @@ import 'package:naverwebtoon_clone/constant/gaps.dart';
 import 'package:naverwebtoon_clone/constant/sizes.dart';
 import 'package:naverwebtoon_clone/models/today_webtoon_model.dart';
 import 'package:naverwebtoon_clone/persistent_tab_bar.dart';
+import 'package:naverwebtoon_clone/screens/search_screen.dart';
 import 'package:naverwebtoon_clone/services/api_service.dart';
+import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final tabs = [
@@ -47,15 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentPageIndex = 0;
 
   LoopPageController loopPageController = LoopPageController();
-  List<String> pageImage = [
-    "https://cdn.pixabay.com/photo/2017/09/25/13/12/puppy-2785074_960_720.jpg",
-    "https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_960_720.jpg",
-    "https://cdn.pixabay.com/photo/2016/02/18/18/37/puppy-1207816_960_720.jpg",
-    "https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036_960_720.jpg",
-    "https://cdn.pixabay.com/photo/2019/02/06/15/18/puppy-3979350_960_720.jpg",
-    "https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg",
-    "https://newsimg.sedaily.com/2023/04/10/29O8ZA6BWK_1.jpg",
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +68,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 50,
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SearchScreen()),
+                      );
+                    },
                     icon:
                         const Icon(Icons.search, color: Colors.white, size: 20),
                   ),
@@ -87,48 +85,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     AspectRatio(
                       aspectRatio: 1,
-                      child: Stack(
-                        alignment: Alignment.topRight,
-                        children: [
-                          LoopPageView.builder(
-                            scrollDirection: Axis.horizontal,
-                            controller: loopPageController,
-                            onPageChanged: (value) {
-                              setState(() {
-                                currentPageIndex = value;
-                              });
-                            },
-                            itemCount: pageImage.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Image.network(
-                                pageImage[index],
-                                fit: BoxFit.cover,
-                              );
-                            },
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 5,
-                              horizontal: 10,
-                            ),
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.8),
-                                borderRadius: BorderRadius.circular(500)),
-                            child: Text(
-                              '${currentPageIndex + 1} / ${pageImage.length}',
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          )
-                        ],
+                      child: FutureBuilder(
+                        future: saturday,
+                        builder: (context, snapshotImg) {
+                          if (snapshotImg.hasData) {
+                            return makeImgList(snapshotImg);
+                          }
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
                       ),
                     ),
-                    DotsIndicator(
-                      dotsCount: pageImage.length,
-                      position: currentPageIndex,
-                      decorator: const DotsDecorator(
-                          color: Colors.grey, activeColor: Colors.purple),
-                    )
                   ],
                 ),
               ),
@@ -316,6 +284,68 @@ class _HomeScreenState extends State<HomeScreen> {
                   Gaps.h2,
                   const Text("9.72")
                 ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  LoopPageView makeImgList(AsyncSnapshot<List<TodayWebtoonModel>> snapshotImg) {
+    return LoopPageView.builder(
+      scrollDirection: Axis.horizontal,
+      controller: loopPageController,
+      onPageChanged: (value) {
+        setState(() {
+          currentPageIndex = value;
+        });
+      },
+      itemCount: snapshotImg.data!.length,
+      itemBuilder: (context, index) {
+        var webtoonImg = snapshotImg.data![index];
+        return GestureDetector(
+          onTap: () {
+            launchUrl(
+              Uri.parse(
+                'https://m.comic.naver.com/webtoon/list?titleId=${webtoonImg.webtoonId.toString().substring(7, 13)}',
+              ),
+            );
+          },
+          child: Stack(
+            alignment: Alignment.topRight,
+            children: [
+              AspectRatio(
+                aspectRatio: 1,
+                child: Image.network(
+                  webtoonImg.img,
+                  headers: const {
+                    "User-Agent":
+                        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+                  },
+                  fit: BoxFit.fill,
+                ),
+              ),
+              PageViewDotIndicator(
+
+                currentItem: currentPageIndex,
+                count: snapshotImg.data!.length,
+                unselectedColor: Colors.grey,
+                selectedColor: Colors.purple,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 5,
+                  horizontal: 10,
+                ),
+                margin: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.8),
+                    borderRadius: BorderRadius.circular(500)),
+                child: Text(
+                  '${currentPageIndex + 1} / ${snapshotImg.data!.length}',
+                  style: const TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),
