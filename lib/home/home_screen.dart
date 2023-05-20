@@ -313,7 +313,6 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
           child: Stack(
-            alignment: Alignment.topRight,
             children: [
               AspectRatio(
                 aspectRatio: 1,
@@ -326,25 +325,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   fit: BoxFit.fill,
                 ),
               ),
-              PageViewDotIndicator(
-
-                currentItem: currentPageIndex,
-                count: snapshotImg.data!.length,
-                unselectedColor: Colors.grey,
-                selectedColor: Colors.purple,
+              Container(
+                margin: EdgeInsets.only(bottom: 25),
+                alignment: Alignment.bottomCenter,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 130,
+                ),
+                child: PageViewDotIndicator(
+                  currentItem: currentPageIndex,
+                  count: snapshotImg.data!.length,
+                  unselectedColor: Colors.grey,
+                  selectedColor: Colors.purple,
+                ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 5,
-                  horizontal: 10,
-                ),
-                margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.8),
-                    borderRadius: BorderRadius.circular(500)),
-                child: Text(
-                  '${currentPageIndex + 1} / ${snapshotImg.data!.length}',
-                  style: const TextStyle(color: Colors.white),
+                alignment: Alignment.topRight,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 5,
+                    horizontal: 10,
+                  ),
+                  margin: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(500)),
+                  child: Text(
+                    '${currentPageIndex + 1} / ${snapshotImg.data!.length}',
+                    style: const TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ],
