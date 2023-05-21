@@ -45,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final Future<List<TodayWebtoonModel>> finished =
       ApiService.getFinishedWebtoons();
   final Future<List<TodayWebtoonModel>> daily = ApiService.getDailyWebtoons();
+
   int currentPageIndex = 0;
 
   LoopPageController loopPageController = LoopPageController();
@@ -58,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
               SliverAppBar(
+                pinned: true,
                 actions: [
                   IconButton(
                     onPressed: () {},
@@ -65,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Icon(Icons.cookie, color: Colors.amber, size: 20),
                   ),
                   const SizedBox(
-                    width: 50,
+                    width: 250,
                   ),
                   IconButton(
                     onPressed: () {
@@ -326,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(bottom: 25),
+                margin: const EdgeInsets.only(bottom: 25),
                 alignment: Alignment.bottomCenter,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 130,
