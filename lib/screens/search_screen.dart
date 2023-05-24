@@ -1,8 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:naverwebtoon_clone/models/today_webtoon_model.dart';
-import 'package:naverwebtoon_clone/services/api_service.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -12,16 +13,15 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final Future<List<TodayWebtoonModel>> search = ApiService.getSearchWebtoons();
+  String result = '';
+  List data = [];
 
   final TextEditingController _textEditingController = TextEditingController();
 
-
-  void _onSearchChanged(String value) {
-
-  }
-
   void _onSearchSubmitted(String value) {
+    setState(() {
+      getJSONData();
+    });
 
   }
 
@@ -42,81 +42,86 @@ class _SearchScreenState extends State<SearchScreen> {
           placeholder: '제목 또는 작가명 검색',
           backgroundColor: Colors.white,
           controller: _textEditingController,
-          onChanged: _onSearchChanged,
           onSubmitted: _onSearchSubmitted,
         ),
       ),
-      body: FutureBuilder(
-        future: search,
-        builder: (context, snapshotSearch) {
-          if (snapshotSearch.hasData) {
-            return makeSearchList(snapshotSearch);
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
+      body: data.isEmpty
+          ? const Center(
+              child: Text(
+                "데이터가 없습니다",
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            )
+          : ListView.separated(
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    if (data[index]['service'].toString() == 'naver') {
+                      launchUrl(
+                        Uri.parse(
+                          'https://m.comic.naver.com/webtoon/list?titleId=${data[index]['webtoonId'].toString().substring(7, 13)}',
+                        ),
+                      );
+                    } else if (data[index]['service'].toString() == 'kakao') {
+                      launchUrl(
+                        Uri.parse(
+                          'https://webtoon.kakao.com/content/${data[index]['title']}/${data[index]['webtoonId'].toString().substring(9, 13)}',
+                        ),
+                      );
+                    } else if (data[index]['service'].toString() ==
+                        'kakaoPage') {
+                      launchUrl(
+                        Uri.parse(
+                          'https://page.kakao.com/content/${data[index]['webtoonId'].toString().substring(5, 13)}',
+                        ),
+                      );
+                    }
+                  },
+                  child: ListTile(
+                    leading: Image.network(
+                      data[index]['img'],
+                      headers: const {
+                        "User-Agent":
+                            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
+                      },
+                    ),
+                    title: Text(
+                      data[index]['title'].toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 25,
+                      ),
+                    ),
+                    subtitle: Text(
+                      data[index]['author'].toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) => Container(
+                height: 1,
+                color: Colors.red,
+              ),
+              itemCount: data!.length,
+            ),
     );
   }
-}
 
-ListView makeSearchList(AsyncSnapshot<List<TodayWebtoonModel>> snapshotSearch) {
-  return ListView.separated(
-    itemBuilder: (context, index) {
-      var webtoonSearch = snapshotSearch.data![index];
-      return GestureDetector(
-        onTap: () {
-          if(webtoonSearch.service.toString() == 'naver') {
-            launchUrl(
-              Uri.parse('https://m.comic.naver.com/webtoon/list?titleId=${webtoonSearch.webtoonId.toString().substring(7, 13)}',
+  Future<String> getJSONData() async {
+    var url = Uri.parse(
+        'https://korea-webtoon-api.herokuapp.com/search?keyword=${_textEditingController.text}');
+    var response = await http.get(url);
 
-              ),
-            ) ;}
-          else if(webtoonSearch.service.toString() == 'kakao') {
-            launchUrl(
-              Uri.parse(
-                'https://webtoon.kakao.com/content/${webtoonSearch.title}/${webtoonSearch.webtoonId.toString().substring(9, 13)}',
-              ),
-            ) ;}
-          else if(webtoonSearch.service.toString() == 'kakaoPage') {
-            launchUrl(
-              Uri.parse(
-                'https://page.kakao.com/content/${webtoonSearch.webtoonId.toString().substring(5, 13)}',
-              ),
-            ) ;}
-        },
-        child: ListTile(
-          leading: Image.network(
-            webtoonSearch.img,
-            headers: const {
-              "User-Agent":
-                  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
-            },
-
-          ),
-          title: Text(
-            webtoonSearch.title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w900,
-              fontSize: 25,
-            ),
-          ),
-          subtitle: Text(
-            webtoonSearch.author,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 20,
-            ),
-          ),
-        ),
-      );
-    },
-    separatorBuilder: (context, index) =>
-      Container(
-        height: 1,
-        color: Colors.red,
-      ),
-    itemCount: snapshotSearch.data!.length,
-  );
+    setState(() {
+      var dataConvertedToJSON = json.decode(response.body);
+      List result = dataConvertedToJSON['webtoons'];
+      data.addAll(result);
+    });
+    return response.body;
+  }
 }

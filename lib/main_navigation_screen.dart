@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:naverwebtoon_clone/constant/sizes.dart';
+import 'package:naverwebtoon_clone/home/home_screen.dart';
 import 'package:naverwebtoon_clone/nav_tab.dart';
 import 'package:naverwebtoon_clone/screens/search_screen.dart';
 
@@ -28,11 +29,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           Offstage(
             offstage: _selectedIndex != 0,
             //search_screen 작업을 위해서 HomeScreen()에서 SearchScreen()으로 수정함
-            child: SearchScreen(),
+            child: const SearchScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: Container(),
+            child: HomeScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 2,
