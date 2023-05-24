@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loop_page_view/loop_page_view.dart';
@@ -32,24 +34,40 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final Future<List<TodayWebtoonModel>> monday = ApiService.getMondayWebtoons();
-  final Future<List<TodayWebtoonModel>> tuesday =
-      ApiService.getTuesdayWebtoons();
-  final Future<List<TodayWebtoonModel>> wednesday =
-      ApiService.getWednesdayWebtoons();
-  final Future<List<TodayWebtoonModel>> thursday =
-      ApiService.getThursdayWebtoons();
+  final Future<List<TodayWebtoonModel>> tuesday = ApiService.getTuesdayWebtoons();
+  final Future<List<TodayWebtoonModel>> wednesday = ApiService.getWednesdayWebtoons();
+  final Future<List<TodayWebtoonModel>> thursday = ApiService.getThursdayWebtoons();
   final Future<List<TodayWebtoonModel>> friday = ApiService.getFridayWebtoons();
-  final Future<List<TodayWebtoonModel>> saturday =
-      ApiService.getSaturdayWebtoons();
+  final Future<List<TodayWebtoonModel>> saturday = ApiService.getSaturdayWebtoons();
   final Future<List<TodayWebtoonModel>> sunday = ApiService.getSundayWebtoons();
-  final Future<List<TodayWebtoonModel>> finished =
-      ApiService.getFinishedWebtoons();
+  final Future<List<TodayWebtoonModel>> finished = ApiService.getFinishedWebtoons();
   final Future<List<TodayWebtoonModel>> daily = ApiService.getDailyWebtoons();
 
   int currentPageIndex = 0;
+  int currentPage = 0;
 
-  LoopPageController loopPageController = LoopPageController();
+  LoopPageController loopPageController = LoopPageController(
+    initialPage: 0,
+  );
 
+  @override
+  void initState() {
+    super.initState();
+
+    Timer.periodic(Duration(seconds: 5), (Timer timer) {
+      if (currentPage < 20) {
+        currentPage++;
+      } else {
+        currentPage = 0;
+      }
+
+      loopPageController.animateToPage(
+        currentPage,
+        duration: Duration(milliseconds: 350),
+        curve: Curves.easeIn,
+      );
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -296,6 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   LoopPageView makeImgList(AsyncSnapshot<List<TodayWebtoonModel>> snapshotImg) {
     return LoopPageView.builder(
+      pageSnapping: true,
       scrollDirection: Axis.horizontal,
       controller: loopPageController,
       onPageChanged: (value) {
@@ -334,6 +353,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   horizontal: 130,
                 ),
                 child: PageViewDotIndicator(
+                  duration: Duration(seconds: 5),
                   currentItem: currentPageIndex,
                   count: snapshotImg.data!.length,
                   unselectedColor: Colors.grey,

@@ -22,7 +22,6 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       getJSONData();
     });
-
   }
 
   @override
@@ -113,7 +112,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Future<String> getJSONData() async {
-    var url = Uri.parse(
+    final url = Uri.parse(
         'https://korea-webtoon-api.herokuapp.com/search?keyword=${_textEditingController.text}');
     var response = await http.get(url);
 
@@ -122,6 +121,7 @@ class _SearchScreenState extends State<SearchScreen> {
       List result = dataConvertedToJSON['webtoons'];
       data.addAll(result);
     });
+
     return response.body;
   }
 }
