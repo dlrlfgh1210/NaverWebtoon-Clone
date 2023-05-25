@@ -20,6 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void _onSearchSubmitted(String result) {
     getJSONData();
+    data.clear();
   }
 
   void _onSearchChanged(String result) {
