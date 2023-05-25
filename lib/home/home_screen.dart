@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    Timer.periodic(Duration(seconds: 5), (Timer timer) {
+    Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       if (currentPage < 20) {
         currentPage++;
       } else {
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       loopPageController.animateToPage(
         currentPage,
-        duration: Duration(milliseconds: 350),
+        duration: const Duration(milliseconds: 350),
         curve: Curves.easeIn,
       );
     });
@@ -353,7 +353,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   horizontal: 130,
                 ),
                 child: PageViewDotIndicator(
-                  duration: Duration(seconds: 5),
+                  duration: const Duration(seconds: 5),
                   currentItem: currentPageIndex,
                   count: snapshotImg.data!.length,
                   unselectedColor: Colors.grey,

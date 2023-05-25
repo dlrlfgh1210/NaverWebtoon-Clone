@@ -18,10 +18,12 @@ class _SearchScreenState extends State<SearchScreen> {
 
   final TextEditingController _textEditingController = TextEditingController();
 
-  void _onSearchSubmitted(String value) {
-    setState(() {
-      getJSONData();
-    });
+  void _onSearchSubmitted(String result) {
+    getJSONData();
+  }
+
+  void _onSearchChanged(String result) {
+    data.clear();
   }
 
   @override
@@ -42,6 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
           backgroundColor: Colors.white,
           controller: _textEditingController,
           onSubmitted: _onSearchSubmitted,
+          onChanged: _onSearchChanged,
         ),
       ),
       body: data.isEmpty
@@ -106,7 +109,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 height: 1,
                 color: Colors.red,
               ),
-              itemCount: data!.length,
+              itemCount: data.length,
             ),
     );
   }
@@ -121,7 +124,6 @@ class _SearchScreenState extends State<SearchScreen> {
       List result = dataConvertedToJSON['webtoons'];
       data.addAll(result);
     });
-
     return response.body;
   }
 }

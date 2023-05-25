@@ -33,7 +33,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: HomeScreen(),
+            child: const HomeScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 2,
