@@ -29,11 +29,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           Offstage(
             offstage: _selectedIndex != 0,
             //search_screen 작업을 위해서 HomeScreen()에서 SearchScreen()으로 수정함
-            child: const SearchScreen(),
+            child: const HomeScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: const HomeScreen(),
+            child: Container(),
           ),
           Offstage(
             offstage: _selectedIndex != 2,

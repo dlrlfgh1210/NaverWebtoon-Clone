@@ -46,6 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentPageIndex = 0;
   int currentPage = 0;
 
+  final ScrollController _scrollController = ScrollController();
+
+  Color _appBarColor = Colors.red;
+
+
+
   LoopPageController loopPageController = LoopPageController(
     initialPage: 0,
   );
@@ -53,7 +59,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
     Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       if (currentPage < 20) {
         currentPage++;
@@ -67,16 +72,35 @@ class _HomeScreenState extends State<HomeScreen> {
         curve: Curves.easeIn,
       );
     });
+    _scrollController.addListener(_onScroll);
   }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    setState(() {
+      _appBarColor = _scrollController.position.pixels > 0
+          ? Colors.blue
+          : Colors.red;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: DefaultTabController(
         length: tabs.length,
         child: NestedScrollView(
+          controller: _scrollController,
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
               SliverAppBar(
+                backgroundColor: _appBarColor,
                 pinned: true,
                 actions: [
                   IconButton(
