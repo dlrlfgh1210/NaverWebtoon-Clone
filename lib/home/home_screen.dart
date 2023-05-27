@@ -34,13 +34,18 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final Future<List<TodayWebtoonModel>> monday = ApiService.getMondayWebtoons();
-  final Future<List<TodayWebtoonModel>> tuesday = ApiService.getTuesdayWebtoons();
-  final Future<List<TodayWebtoonModel>> wednesday = ApiService.getWednesdayWebtoons();
-  final Future<List<TodayWebtoonModel>> thursday = ApiService.getThursdayWebtoons();
+  final Future<List<TodayWebtoonModel>> tuesday =
+      ApiService.getTuesdayWebtoons();
+  final Future<List<TodayWebtoonModel>> wednesday =
+      ApiService.getWednesdayWebtoons();
+  final Future<List<TodayWebtoonModel>> thursday =
+      ApiService.getThursdayWebtoons();
   final Future<List<TodayWebtoonModel>> friday = ApiService.getFridayWebtoons();
-  final Future<List<TodayWebtoonModel>> saturday = ApiService.getSaturdayWebtoons();
+  final Future<List<TodayWebtoonModel>> saturday =
+      ApiService.getSaturdayWebtoons();
   final Future<List<TodayWebtoonModel>> sunday = ApiService.getSundayWebtoons();
-  final Future<List<TodayWebtoonModel>> finished = ApiService.getFinishedWebtoons();
+  final Future<List<TodayWebtoonModel>> finished =
+      ApiService.getFinishedWebtoons();
   final Future<List<TodayWebtoonModel>> daily = ApiService.getDailyWebtoons();
 
   int currentPageIndex = 0;
@@ -82,9 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onScroll() {
     setState(() {
-      _appBarColor = _scrollController.position.pixels > 0
-          ? Colors.blue
-          : Colors.red;
+      _appBarColor =
+          _scrollController.position.pixels > 0 ? Colors.blue : Colors.red;
     });
   }
 
@@ -102,7 +106,64 @@ class _HomeScreenState extends State<HomeScreen> {
                 pinned: true,
                 actions: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet<void>(
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        builder: (BuildContext context) {
+                          return Container(
+                            height: 400,
+                            child: Column(
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    print('favorite');
+                                  },
+                                  child: const Text('인기순'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    print("woman's favorite");
+                                  },
+                                  child: const Text('여성 인기순'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    print("man's favorite");
+                                  },
+                                  child: const Text('남성 인기순'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    print('views');
+                                  },
+                                  child: const Text('조회순'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    print('update');
+                                  },
+                                  child: const Text('업데이트순'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    print('stars');
+                                  },
+                                  child: const Text('별점순'),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.cancel_outlined,
+                                      color: Colors.grey, size: 20),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
                     icon:
                         const Icon(Icons.cookie, color: Colors.amber, size: 20),
                   ),
