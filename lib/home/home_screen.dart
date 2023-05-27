@@ -50,8 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Color _appBarColor = Colors.red;
 
-
-
   LoopPageController loopPageController = LoopPageController(
     initialPage: 0,
   );

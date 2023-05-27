@@ -3,7 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:naverwebtoon_clone/constant/sizes.dart';
 import 'package:naverwebtoon_clone/home/home_screen.dart';
 import 'package:naverwebtoon_clone/nav_tab.dart';
-import 'package:naverwebtoon_clone/screens/search_screen.dart';
+import 'package:naverwebtoon_clone/screens/recommend_screen.dart';
+
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -28,12 +29,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         children: [
           Offstage(
             offstage: _selectedIndex != 0,
-            //search_screen 작업을 위해서 HomeScreen()에서 SearchScreen()으로 수정함
-            child: const HomeScreen(),
+            //recommend_screen 작업을 위해서 HomeScreen()에서 RecommendScreen()으로 수정함
+            child: RecommendScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: Container(),
+            child: const HomeScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 2,
