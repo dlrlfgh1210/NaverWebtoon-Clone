@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:naverwebtoon_clone/models/recommend_detail_model.dart';
 import 'package:naverwebtoon_clone/models/recommend_webtoon_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,6 +19,16 @@ class RecommendApiService {
         recommendInstance.add(instance);
       }
       return recommendInstance;
+    }
+    throw Error();
+  }
+
+  static Future<RecommendDetailModel> getToonById(String id) async {
+    final url = Uri.parse("$baseUrl/$id");
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final webtoon = jsonDecode(response.body);
+      return RecommendDetailModel.fromJson(webtoon);
     }
     throw Error();
   }

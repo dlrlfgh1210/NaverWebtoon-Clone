@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:naverwebtoon_clone/models/recommend_webtoon_model.dart';
+import 'package:naverwebtoon_clone/recommend/detail_screen.dart';
 import 'package:naverwebtoon_clone/screens/search_screen.dart';
 import 'package:naverwebtoon_clone/services/recommend_api_service.dart';
 
@@ -63,42 +64,56 @@ class _RecommendScreenState extends State<RecommendScreen> {
       padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 20),
       itemBuilder: (context, index) {
         var recommendWebtoon = snapshot.data![index];
-        return Column(
-          children: [
-            Hero(
-              tag: recommendWebtoon.id,
-              child: Container(
-                width: 230,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 20,
-                      offset: const Offset(15, 15),
-                      color: Colors.black.withOpacity(0.5),
-                    )
-                  ],
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailScreen(
+                  thumb: recommendWebtoon.thumb,
+                  id: recommendWebtoon.id,
                 ),
-                child: Image.network(
-                  recommendWebtoon.thumb,
-                  headers: const {
-                    "User-Agent":
-                        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
-                  },
+                fullscreenDialog: true,
+              ),
+            );
+          },
+          child: Column(
+            children: [
+              Hero(
+                tag: recommendWebtoon.id,
+                child: Container(
+                  width: 230,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 20,
+                        offset: const Offset(15, 15),
+                        color: Colors.black.withOpacity(0.5),
+                      )
+                    ],
+                  ),
+                  child: Image.network(
+                    recommendWebtoon.thumb,
+                    headers: const {
+                      "User-Agent":
+                          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+                    },
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              recommendWebtoon.title,
-              style: const TextStyle(
-                fontSize: 23,
+              const SizedBox(
+                height: 20,
               ),
-            ),
-          ],
+            /*  Text(
+                recommendWebtoon.title,
+                style: const TextStyle(
+                  fontSize: 23,
+                ),
+              ),*/
+            ],
+          ),
         );
       },
       separatorBuilder: (context, index) => const SizedBox(width: 30),

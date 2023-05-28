@@ -7,9 +7,9 @@ import 'package:naverwebtoon_clone/constant/gaps.dart';
 import 'package:naverwebtoon_clone/constant/sizes.dart';
 import 'package:naverwebtoon_clone/home/category_select.dart';
 import 'package:naverwebtoon_clone/models/today_webtoon_model.dart';
-import 'package:naverwebtoon_clone/persistent_tab_bar.dart';
+import 'package:naverwebtoon_clone/home/persistent_tab_bar.dart';
 import 'package:naverwebtoon_clone/screens/search_screen.dart';
-import 'package:naverwebtoon_clone/services/api_service.dart';
+import 'package:naverwebtoon_clone/services/home_api_service.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,20 +34,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Future<List<TodayWebtoonModel>> monday = ApiService.getMondayWebtoons();
+  final Future<List<TodayWebtoonModel>> monday = HomeApiService.getMondayWebtoons();
   final Future<List<TodayWebtoonModel>> tuesday =
-      ApiService.getTuesdayWebtoons();
+  HomeApiService.getTuesdayWebtoons();
   final Future<List<TodayWebtoonModel>> wednesday =
-      ApiService.getWednesdayWebtoons();
+  HomeApiService.getWednesdayWebtoons();
   final Future<List<TodayWebtoonModel>> thursday =
-      ApiService.getThursdayWebtoons();
-  final Future<List<TodayWebtoonModel>> friday = ApiService.getFridayWebtoons();
+  HomeApiService.getThursdayWebtoons();
+  final Future<List<TodayWebtoonModel>> friday = HomeApiService.getFridayWebtoons();
   final Future<List<TodayWebtoonModel>> saturday =
-      ApiService.getSaturdayWebtoons();
-  final Future<List<TodayWebtoonModel>> sunday = ApiService.getSundayWebtoons();
+  HomeApiService.getSaturdayWebtoons();
+  final Future<List<TodayWebtoonModel>> sunday = HomeApiService.getSundayWebtoons();
   final Future<List<TodayWebtoonModel>> finished =
-      ApiService.getFinishedWebtoons();
-  final Future<List<TodayWebtoonModel>> daily = ApiService.getDailyWebtoons();
+  HomeApiService.getFinishedWebtoons();
+  final Future<List<TodayWebtoonModel>> daily = HomeApiService.getDailyWebtoons();
 
   int currentPageIndex = 0;
   int currentPage = 0;

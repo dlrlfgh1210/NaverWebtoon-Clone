@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:naverwebtoon_clone/constant/sizes.dart';
 import 'package:naverwebtoon_clone/home/home_screen.dart';
 import 'package:naverwebtoon_clone/nav_tab.dart';
-import 'package:naverwebtoon_clone/screens/recommend_screen.dart';
+import 'package:naverwebtoon_clone/recommend/recommend_screen.dart';
 
 
 class MainNavigationScreen extends StatefulWidget {
