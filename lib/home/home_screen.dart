@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loop_page_view/loop_page_view.dart';
 import 'package:naverwebtoon_clone/constant/gaps.dart';
 import 'package:naverwebtoon_clone/constant/sizes.dart';
+import 'package:naverwebtoon_clone/home/category_select.dart';
 import 'package:naverwebtoon_clone/models/today_webtoon_model.dart';
 import 'package:naverwebtoon_clone/persistent_tab_bar.dart';
 import 'package:naverwebtoon_clone/screens/search_screen.dart';
@@ -106,69 +107,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 pinned: true,
                 actions: [
                   IconButton(
-                    onPressed: () {
-                      showModalBottomSheet<void>(
-                        context: context,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        builder: (BuildContext context) {
-                          return Container(
-                            height: 400,
-                            child: Column(
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    print('favorite');
-                                  },
-                                  child: const Text('인기순'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    print("woman's favorite");
-                                  },
-                                  child: const Text('여성 인기순'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    print("man's favorite");
-                                  },
-                                  child: const Text('남성 인기순'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    print('views');
-                                  },
-                                  child: const Text('조회순'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    print('update');
-                                  },
-                                  child: const Text('업데이트순'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    print('stars');
-                                  },
-                                  child: const Text('별점순'),
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.cancel_outlined,
-                                      color: Colors.grey, size: 20),
-                                  onPressed: () => Navigator.pop(context),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onPressed: () {},
                     icon:
                         const Icon(Icons.cookie, color: Colors.amber, size: 20),
                   ),
                   const SizedBox(
-                    width: 250,
+                    width: 50,
+                  ),
+                 const CategorySelect(),
+                  const SizedBox(
+                    width: 50,
                   ),
                   IconButton(
                     onPressed: () {
