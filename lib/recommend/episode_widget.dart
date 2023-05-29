@@ -40,39 +40,31 @@ class Episode extends StatelessWidget {
             horizontal: 10,
           ),
           child: ListTile(
-            leading: Image.network(episode.thumb,width: 100, height: 100, headers: const {
-              "User-Agent":
-              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
-            },),
-            title: Text(episode.title, style: const TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            ),),
-            subtitle:Text('${episode.rating}     ${episode.date}', style: const TextStyle(
-              color: Colors.red,
-              fontSize: 15,
-            ),),/*
-            trailing: Text(episode.date, style: const TextStyle(
-              color: Colors.amber,
-              fontSize: 15,
-            ),),*/
-          ), /*Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                episode.title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
+            leading: Image.network(
+              episode.thumb,
+              width: 100,
+              height: 100,
+              headers: const {
+                "User-Agent":
+                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+              },
+            ),
+            title: Text(
+              episode.title,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
               ),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: Colors.white,
+            ),
+            subtitle: Text(
+              '${episode.rating}     ${episode.date}',
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 15,
               ),
-            ],
-          ),*/
+            ),
+          ),
         ),
       ),
     );
