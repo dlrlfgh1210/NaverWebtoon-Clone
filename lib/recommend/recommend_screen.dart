@@ -72,6 +72,7 @@ class _RecommendScreenState extends State<RecommendScreen> {
                 builder: (context) => DetailScreen(
                   thumb: recommendWebtoon.thumb,
                   id: recommendWebtoon.id,
+                  title: recommendWebtoon.title,
                 ),
                 fullscreenDialog: true,
               ),

@@ -109,14 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   IconButton(
                     onPressed: () {},
                     icon:
-                        const Icon(Icons.cookie, color: Colors.amber, size: 20),
+                        Icon(Icons.cookie, color: Colors.amber, size: 20),
                   ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                 const CategorySelect(),
-                  const SizedBox(
-                    width: 50,
+                 SizedBox(
+                   width: 70,
+                 ),
+                 CategorySelect(),
+                  SizedBox(
+                    width: 70,
                   ),
                   IconButton(
                     onPressed: () {
@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                     icon:
-                        const Icon(Icons.search, color: Colors.white, size: 20),
+                        Icon(Icons.search, color: Colors.white, size: 20),
                   ),
                 ],
               ),
