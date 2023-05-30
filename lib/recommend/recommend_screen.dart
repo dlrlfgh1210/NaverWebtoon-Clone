@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:naverwebtoon_clone/models/recommend_webtoon_model.dart';
 import 'package:naverwebtoon_clone/recommend/detail_screen.dart';
+import 'package:naverwebtoon_clone/recommend/list_screen.dart';
 import 'package:naverwebtoon_clone/screens/search_screen.dart';
 import 'package:naverwebtoon_clone/services/recommend_api_service.dart';
 
@@ -43,16 +44,55 @@ class _RecommendScreenState extends State<RecommendScreen> {
           ),
         ],
       ),
-      body: FutureBuilder(
-        future: recommends,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return makeList(snapshot);
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    '네이버 웹툰',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.green,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ListScreen(),
+                    ),
+                  );},
+                  icon: const Icon(
+                    Icons.chevron_right,
+                    size: 30,
+                    color: Colors.green,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 300,
+              child: FutureBuilder(
+                future: recommends,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return makeList(snapshot);
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -61,7 +101,7 @@ class _RecommendScreenState extends State<RecommendScreen> {
     return ListView.separated(
       scrollDirection: Axis.horizontal,
       itemCount: snapshot.data!.length,
-      padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
       itemBuilder: (context, index) {
         var recommendWebtoon = snapshot.data![index];
         return GestureDetector(
@@ -83,7 +123,7 @@ class _RecommendScreenState extends State<RecommendScreen> {
               Hero(
                 tag: recommendWebtoon.id,
                 child: Container(
-                  width: 230,
+                  width: 200,
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -107,12 +147,6 @@ class _RecommendScreenState extends State<RecommendScreen> {
               const SizedBox(
                 height: 20,
               ),
-            /*  Text(
-                recommendWebtoon.title,
-                style: const TextStyle(
-                  fontSize: 23,
-                ),
-              ),*/
             ],
           ),
         );
