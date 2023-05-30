@@ -3,6 +3,7 @@ import 'package:naverwebtoon_clone/models/recommend_detail_model.dart';
 import 'package:naverwebtoon_clone/models/recommend_episode_model.dart';
 import 'package:naverwebtoon_clone/recommend/episode_widget.dart';
 import 'package:naverwebtoon_clone/services/recommend_api_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailScreen extends StatefulWidget {
   final String thumb, id, title;
@@ -21,12 +22,44 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   late Future<RecommendDetailModel> details;
   late Future<List<RecommendEpisodeModel>> episodes;
+  late SharedPreferences preferences;
+  bool isLiked = false;
+
+  Future initPreferences() async {
+    preferences = await SharedPreferences.getInstance();
+    final likedToons = preferences.getStringList('likedToons');
+    if (likedToons != null) {
+      if (likedToons.contains(widget.id) == true) {
+        setState(() {
+          isLiked = true;
+        });
+      }
+    } else {
+      await preferences.setStringList('likedToons', []);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     details = RecommendApiService.getToonById(widget.id);
     episodes = RecommendApiService.getLatestEpisodesById(widget.id);
+    initPreferences();
+  }
+
+  onHeartTap() async {
+    final likedToons = preferences.getStringList('likedToons');
+    if (likedToons != null) {
+      if (isLiked) {
+        likedToons.remove(widget.id);
+      } else {
+        likedToons.add(widget.id);
+      }
+      await preferences.setStringList('likedToons', likedToons);
+      setState(() {
+        isLiked = !isLiked;
+      });
+    }
   }
 
   @override
@@ -45,7 +78,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 fontSize: 24,
               ),
             ),
-            Icon(Icons.more_vert),
+            const Icon(Icons.more_vert),
           ],
         ),
       ),
@@ -77,7 +110,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                 ],
               ),
-              const SizedBox (
+              const SizedBox(
                 height: 25,
               ),
               FutureBuilder(
@@ -94,9 +127,24 @@ class _DetailScreenState extends State<DetailScreen> {
                         const SizedBox(
                           height: 15,
                         ),
-                        Text(
-                          '${snapshot.data!.genre} / ${snapshot.data!.age}',
-                          style: const TextStyle(fontSize: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '${snapshot.data!.genre} / ${snapshot.data!.age}',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            IconButton(
+                              iconSize: 30,
+                              color: isLiked ? Colors.red : Colors.grey,
+                              onPressed: onHeartTap,
+                              icon: Icon(
+                                isLiked
+                                    ? Icons.favorite
+                                    : Icons.favorite_outline,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     );
@@ -122,7 +170,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     return Column(
                       children: [
                         for (var episode in snapshot.data!)
-                          Episode (
+                          Episode(
                             episode: episode,
                             webtoonId: widget.id,
                           )

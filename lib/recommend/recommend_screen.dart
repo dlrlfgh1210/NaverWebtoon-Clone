@@ -74,7 +74,7 @@ class _RecommendScreenState extends State<RecommendScreen> {
                   id: recommendWebtoon.id,
                   title: recommendWebtoon.title,
                 ),
-                fullscreenDialog: true,
+                /*fullscreenDialog: true,*/
               ),
             );
           },

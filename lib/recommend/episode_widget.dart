@@ -57,12 +57,21 @@ class Episode extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            subtitle: Text(
-              '${episode.rating}     ${episode.date}',
-              style: const TextStyle(
-                color: Colors.red,
-                fontSize: 15,
-              ),
+            subtitle: Row(
+              children: [
+                const Icon(
+                  Icons.star,
+                  size: 15,
+                  color: Colors.red,
+                ),
+                Text(
+                  '${episode.rating}     ${episode.date}',
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 15,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
