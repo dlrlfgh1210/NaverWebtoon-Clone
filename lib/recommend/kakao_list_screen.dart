@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:naverwebtoon_clone/models/today_webtoon_model.dart';
+import 'package:naverwebtoon_clone/recommend/kakao_detail_screen.dart';
 import 'package:naverwebtoon_clone/services/recommend_api_service.dart';
 
 class KakaoListScreen extends StatefulWidget {
@@ -57,16 +58,18 @@ class _KakaoListScreenState extends State<KakaoListScreen> {
         var recommendWebtoon = snapshotList.data![index];
         return GestureDetector(
           onTap: () {
-         /*   Navigator.push(
+            Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailScreen(
-                  thumb: recommendWebtoon.thumb,
-                  id: recommendWebtoon.id,
+                builder: (context) => KakaoDetailScreen(
+                  img: recommendWebtoon.img,
+                  webtoonId: recommendWebtoon.webtoonId,
                   title: recommendWebtoon.title,
+                  author: recommendWebtoon.author,
+                  url: recommendWebtoon.url,
                 ),
               ),
-            );*/
+            );
           },
           child: Column(
             children: [

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:naverwebtoon_clone/models/recommend_webtoon_model.dart';
 import 'package:naverwebtoon_clone/models/today_webtoon_model.dart';
 import 'package:naverwebtoon_clone/recommend/detail_screen.dart';
+import 'package:naverwebtoon_clone/recommend/kakao_detail_screen.dart';
 import 'package:naverwebtoon_clone/recommend/kakao_list_screen.dart';
 import 'package:naverwebtoon_clone/recommend/list_screen.dart';
 import 'package:naverwebtoon_clone/screens/search_screen.dart';
@@ -49,116 +50,118 @@ class _RecommendScreenState extends State<RecommendScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text(
-                        '네이버 웹툰',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Text(
+                          '네이버 웹툰',
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ListScreen(),
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.chevron_right,
+                          size: 30,
                           color: Colors.green,
                         ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ListScreen(),
-                          ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 300,
+                    child: FutureBuilder(
+                      future: recommends,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return makeList(snapshot);
+                        }
+                        return const Center(
+                          child: CircularProgressIndicator(),
                         );
                       },
-                      icon: const Icon(
-                        Icons.chevron_right,
-                        size: 30,
-                        color: Colors.green,
-                      ),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 300,
-                  child: FutureBuilder(
-                    future: recommends,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return makeList(snapshot);
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-          SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text(
-                        '카카오 웹툰',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600,
+            const SizedBox(
+              height: 12,
+            ),
+            SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Text(
+                          '카카오 웹툰',
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.amber,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                           Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const KakaoListScreen(),
+                          ),
+                        );
+                        },
+                        icon: const Icon(
+                          Icons.chevron_right,
+                          size: 30,
                           color: Colors.amber,
                         ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                         Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const KakaoListScreen(),
-                        ),
-                      );
-                      },
-                      icon: const Icon(
-                        Icons.chevron_right,
-                        size: 30,
-                        color: Colors.amber,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 300,
-                  child: FutureBuilder(
-                    future: kakaos,
-                    builder: (context, snapshotKakao) {
-                      if (snapshotKakao.hasData) {
-                        return makeKakaoList(snapshotKakao);
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
+                    ],
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 300,
+                    child: FutureBuilder(
+                      future: kakaos,
+                      builder: (context, snapshotKakao) {
+                        if (snapshotKakao.hasData) {
+                          return makeKakaoList(snapshotKakao);
+                        }
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -230,17 +233,18 @@ class _RecommendScreenState extends State<RecommendScreen> {
         var recommendKakaoWebtoon = snapshotKakao.data![index];
         return GestureDetector(
           onTap: () {
-            /*    Navigator.push(
+                Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailScreen(
-                  thumb: recommendWebtoon.thumb,
-                  id: recommendWebtoon.id,
-                  title: recommendWebtoon.title,
+                builder: (context) => KakaoDetailScreen(
+                  img: recommendKakaoWebtoon.img,
+                  webtoonId: recommendKakaoWebtoon.webtoonId,
+                  title: recommendKakaoWebtoon.title,
+                  author: recommendKakaoWebtoon.author,
+                  url: recommendKakaoWebtoon.url,
                 ),
-                */ /*fullscreenDialog: true,*/ /*
               ),
-            );*/
+            );
           },
           child: Column(
             children: [
