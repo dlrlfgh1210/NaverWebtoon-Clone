@@ -72,10 +72,12 @@ class _KakaoDetailScreenState extends State<KakaoDetailScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              widget.title,
-              style: const TextStyle(
-                fontSize: 24,
+            Expanded(
+              child: Text(
+                widget.title,
+                style: const TextStyle(
+                  fontSize: 24,
+                ),
               ),
             ),
             const Icon(Icons.more_vert),
@@ -117,15 +119,27 @@ class _KakaoDetailScreenState extends State<KakaoDetailScreen> {
                 future: details,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          widget.author,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                        const SizedBox(
-                          height: 15,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '제목: ${widget.title}',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              '작가: ${widget.author}',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                          ],
                         ),
                         IconButton(
                           iconSize: 30,

@@ -68,14 +68,16 @@ class _DetailScreenState extends State<DetailScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        foregroundColor: Colors.green,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              widget.title,
-              style: const TextStyle(
-                fontSize: 24,
+            Expanded(
+              child: Text(
+                widget.title,
+                style: const TextStyle(
+                  fontSize: 24,
+                ),
               ),
             ),
             const Icon(Icons.more_vert),
