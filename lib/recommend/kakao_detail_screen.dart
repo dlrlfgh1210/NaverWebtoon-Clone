@@ -176,7 +176,7 @@ class _KakaoDetailScreenState extends State<KakaoDetailScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '보려가기',
+                          '보러 가기',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,

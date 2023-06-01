@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:naverwebtoon_clone/models/recommend_webtoon_model.dart';
 import 'package:naverwebtoon_clone/models/today_webtoon_model.dart';
 import 'package:naverwebtoon_clone/recommend/detail_screen.dart';
@@ -23,15 +25,19 @@ class _RecommendScreenState extends State<RecommendScreen> {
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting('ko_KR', null);
+
+    DateTime now = DateTime.now();
+    String dayOfWeek = DateFormat('EEEE', 'ko_KR').format(now);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 1,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        title: const Text(
-          '추천웹툰',
-          style: TextStyle(
+        title: Text(
+          '$dayOfWeek 추천 웹툰',
+          style: const TextStyle(
             fontSize: 23,
             fontWeight: FontWeight.w400,
           ),
