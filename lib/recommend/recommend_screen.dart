@@ -3,10 +3,10 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:naverwebtoon_clone/models/recommend_webtoon_model.dart';
 import 'package:naverwebtoon_clone/models/today_webtoon_model.dart';
-import 'package:naverwebtoon_clone/recommend/detail_screen.dart';
 import 'package:naverwebtoon_clone/recommend/kakao_detail_screen.dart';
 import 'package:naverwebtoon_clone/recommend/kakao_list_screen.dart';
-import 'package:naverwebtoon_clone/recommend/list_screen.dart';
+import 'package:naverwebtoon_clone/recommend/naver_list_screen.dart';
+import 'package:naverwebtoon_clone/recommend/naver_detail_screen.dart';
 import 'package:naverwebtoon_clone/screens/search_screen.dart';
 import 'package:naverwebtoon_clone/services/recommend_api_service.dart';
 
@@ -82,7 +82,7 @@ class _RecommendScreenState extends State<RecommendScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ListScreen(),
+                              builder: (context) => const NaverListScreen(),
                             ),
                           );
                         },
@@ -184,7 +184,7 @@ class _RecommendScreenState extends State<RecommendScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailScreen(
+                builder: (context) => NaverDetailScreen(
                   thumb: recommendWebtoon.thumb,
                   id: recommendWebtoon.id,
                   title: recommendWebtoon.title,

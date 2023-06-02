@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:naverwebtoon_clone/models/recommend_webtoon_model.dart';
-import 'package:naverwebtoon_clone/recommend/detail_screen.dart';
+import 'package:naverwebtoon_clone/recommend/naver_detail_screen.dart';
 import 'package:naverwebtoon_clone/services/recommend_api_service.dart';
 
-class ListScreen extends StatefulWidget {
-  const ListScreen({Key? key}) : super(key: key);
+class NaverListScreen extends StatefulWidget {
+  const NaverListScreen({Key? key}) : super(key: key);
 
   @override
-  State<ListScreen> createState() => _ListScreenState();
+  State<NaverListScreen> createState() => _NaverListScreenState();
 }
 
-class _ListScreenState extends State<ListScreen> {
+class _NaverListScreenState extends State<NaverListScreen> {
   final Future<List<RecommendWebtoonModel>> recommends = RecommendApiService.getRecommendToons();
 
   @override
@@ -61,7 +61,7 @@ class _ListScreenState extends State<ListScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailScreen(
+                builder: (context) => NaverDetailScreen(
                   thumb: recommendWebtoon.thumb,
                   id: recommendWebtoon.id,
                   title: recommendWebtoon.title,

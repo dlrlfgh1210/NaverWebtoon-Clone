@@ -5,10 +5,10 @@ import 'package:naverwebtoon_clone/recommend/episode_widget.dart';
 import 'package:naverwebtoon_clone/services/recommend_api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DetailScreen extends StatefulWidget {
+class NaverDetailScreen extends StatefulWidget {
   final String thumb, id, title;
 
-  const DetailScreen({
+  const NaverDetailScreen({
     Key? key,
     required this.thumb,
     required this.id,
@@ -16,14 +16,15 @@ class DetailScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DetailScreen> createState() => _DetailScreenState();
+  State<NaverDetailScreen> createState() => _NaverDetailScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class _NaverDetailScreenState extends State<NaverDetailScreen> {
   late Future<RecommendDetailModel> details;
   late Future<List<RecommendEpisodeModel>> episodes;
   late SharedPreferences preferences;
   bool isLiked = false;
+  bool isExpanded = false;
 
   Future initPreferences() async {
     preferences = await SharedPreferences.getInstance();
@@ -125,6 +126,18 @@ class _DetailScreenState extends State<DetailScreen> {
                         Text(
                           snapshot.data!.about,
                           style: const TextStyle(fontSize: 16),
+                          maxLines: isExpanded ? 20 : 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              isExpanded = !isExpanded;
+                            });
+                          },
+                          child: Icon(
+                            isExpanded ? Icons.upgrade : Icons.download,
+                          ),
                         ),
                         const SizedBox(
                           height: 15,
