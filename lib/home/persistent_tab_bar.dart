@@ -1,19 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:naverwebtoon_clone/constant/sizes.dart';
 
-/*final tabs = [
-  "신작",
-  "매일+",
-  "월",
-  "화",
-  "수",
-  "목",
-  "금",
-  "토",
-  "일",
-  "완결",
-];*/
-
 class PersistentTabBar extends SliverPersistentHeaderDelegate {
   @override
   Widget build(

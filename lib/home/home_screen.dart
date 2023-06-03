@@ -13,18 +13,7 @@ import 'package:naverwebtoon_clone/services/home_api_service.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-final tabs = [
-  "신작",
-  "매일+",
-  "월",
-  "화",
-  "수",
-  "목",
-  "금",
-  "토",
-  "일",
-  "완결",
-];
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -97,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: DefaultTabController(
-        length: tabs.length,
+        length: 10,
         child: NestedScrollView(
           controller: _scrollController,
           headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -109,25 +98,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   IconButton(
                     onPressed: () {},
                     icon:
-                        Icon(Icons.cookie, color: Colors.amber, size: 20),
+                        const Icon(Icons.cookie, color: Colors.amber, size: 20),
                   ),
-                 SizedBox(
-                   width: 70,
+                 const SizedBox(
+                   width: 40,
                  ),
-                 CategorySelect(),
-                  SizedBox(
-                    width: 70,
+                 const CategorySelect(),
+                  const SizedBox(
+                    width: 40,
                   ),
                   IconButton(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SearchScreen()),
+                            builder: (context) => const SearchScreen(),),
                       );
                     },
                     icon:
-                        Icon(Icons.search, color: Colors.white, size: 20),
+                        const Icon(Icons.search, color: Colors.white, size: 20),
                   ),
                 ],
               ),
@@ -272,13 +261,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return GridView.builder(
       itemCount: snapshotToday.data!.length,
       padding: const EdgeInsets.all(
-        Sizes.size10,
+        Sizes.size5,
       ),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         crossAxisSpacing: Sizes.size6,
-        mainAxisSpacing: Sizes.size6,
-        childAspectRatio: 9 / 20,
+        childAspectRatio: 9 / 19,
       ),
       itemBuilder: (context, index) {
         var todayWebtoon = snapshotToday.data![index];
@@ -295,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Sizes.size4),
+                  borderRadius: BorderRadius.circular(Sizes.size10),
                 ),
                 child: AspectRatio(
                   aspectRatio: 9 / 15,
@@ -308,13 +296,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              Gaps.v10,
               Text(
                 todayWebtoon.title,
                 style: const TextStyle(
-                    fontSize: Sizes.size10,
-                    fontWeight: FontWeight.bold,
-                    height: 1.1),
+                    fontSize: Sizes.size14,
+                    overflow: TextOverflow.ellipsis,
+                    fontWeight: FontWeight.bold,),
               ),
               Gaps.v8,
               Row(
@@ -327,10 +314,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Gaps.h2,
-                  FaIcon(
+                  const FaIcon(
                     FontAwesomeIcons.solidStar,
-                    size: Sizes.size4,
-                    color: Colors.grey.shade600,
+                    size: Sizes.size10,
+                    color: Colors.red,
                   ),
                   Gaps.h2,
                   const Text("9.72")
