@@ -100,36 +100,33 @@ class _KakaoPageDetailScreenState extends State<KakaoPageDetailScreen> {
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 25,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w800,
                         ),),
                   ),
                   const SizedBox(height: 20),
-                  FutureBuilder(
-                      future: details,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 15),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                child: Text(
-                                  widget.author,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        }
-                        return const Text("...");
-                      }),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        child: Text(widget.author,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w100,
+                          ),),
+                      ),
+                      IconButton(
+                        iconSize: 30,
+                        color: isLiked ? Colors.red : Colors.grey,
+                        onPressed: onHeartTap,
+                        icon: Icon(
+                          isLiked ? Icons.favorite : Icons.favorite_outline,
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(
                     height: 350,
                   ),
