@@ -107,7 +107,7 @@ class _KakaoPageDetailScreenState extends State<KakaoPageDetailScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
+                      Expanded(
                         child: Text(widget.author,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
