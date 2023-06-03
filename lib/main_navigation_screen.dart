@@ -29,12 +29,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         children: [
           Offstage(
             offstage: _selectedIndex != 0,
-            //recommend_screen 작업을 위해서 HomeScreen()에서 RecommendScreen()으로 수정함
-            child: RecommendScreen(),
+            child: const HomeScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: const HomeScreen(),
+            child: const RecommendScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 2,

@@ -33,13 +33,35 @@ class RecommendApiService {
     String updateDay = '';
    updateToday() {
      updateDay = DateFormat('EEEE').format(now).substring(0,3).toLowerCase();
-     print(updateDay);
    }
 
    updateToday();
 
     List<TodayWebtoonModel> todayInstances = [];
     final url = Uri.parse('$baseKakaoUrl/?perPage=20&service=kakao&updateDay=$updateDay');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      final webtoons = json['webtoons'];
+      for (var webtoon in webtoons) {
+        todayInstances.add(TodayWebtoonModel.fromJson(webtoon));
+      }
+      return todayInstances;
+    }
+    throw Error();
+  }
+
+  static Future<List<TodayWebtoonModel>> getRecommendKakaoPageToons() async {
+    DateTime now = DateTime.now();
+    String updateDay = '';
+    updateToday() {
+      updateDay = DateFormat('EEEE').format(now).substring(0,3).toLowerCase();
+    }
+
+    updateToday();
+
+    List<TodayWebtoonModel> todayInstances = [];
+    final url = Uri.parse('$baseKakaoUrl/?perPage=20&service=kakaoPage&updateDay=$updateDay');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);

@@ -4,11 +4,11 @@ import 'package:naverwebtoon_clone/services/recommend_api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class KakaoDetailScreen extends StatefulWidget {
+class KakaoPageDetailScreen extends StatefulWidget {
   final String title, author, img, url;
   final int webtoonId;
 
-  const KakaoDetailScreen({
+  const KakaoPageDetailScreen({
     Key? key,
     required this.title,
     required this.author,
@@ -18,10 +18,10 @@ class KakaoDetailScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<KakaoDetailScreen> createState() => _KakaoDetailScreenState();
+  State<KakaoPageDetailScreen> createState() => _KakaoPageDetailScreenState();
 }
 
-class _KakaoDetailScreenState extends State<KakaoDetailScreen> {
+class _KakaoPageDetailScreenState extends State<KakaoPageDetailScreen> {
   late Future<List<TodayWebtoonModel>> details;
   late SharedPreferences preferences;
   bool isLiked = false;
@@ -43,7 +43,7 @@ class _KakaoDetailScreenState extends State<KakaoDetailScreen> {
   @override
   void initState() {
     super.initState();
-    details = RecommendApiService.getRecommendKakaoToons();
+    details = RecommendApiService.getRecommendKakaoPageToons();
     initPreferences();
   }
 
@@ -68,7 +68,7 @@ class _KakaoDetailScreenState extends State<KakaoDetailScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        foregroundColor: Colors.amber,
+        foregroundColor: Colors.purple,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -122,26 +122,29 @@ class _KakaoDetailScreenState extends State<KakaoDetailScreen> {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '제목: ${widget.title}',
-                              style: const TextStyle(fontSize: 16),
-                              maxLines: 2,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              '작가: ${widget.author}',
-                              style: const TextStyle(fontSize: 16),
-                              maxLines: 2,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                          ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '제목: ${widget.title}',
+                                style: const TextStyle(fontSize: 16,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                '작가: ${widget.author}',
+                                style: const TextStyle(
+                                    fontSize: 16,),
+                                maxLines: 2,
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                            ],
+                          ),
                         ),
                         IconButton(
                           iconSize: 30,
@@ -172,7 +175,7 @@ class _KakaoDetailScreenState extends State<KakaoDetailScreen> {
                 onTap: () {
                   launchUrl(
                     Uri.parse(
-                      'https://webtoon.kakao.com/content/${widget.title}/${widget.webtoonId.toString().substring(9, 13)}',
+                      'https://page.kakao.com/content/${widget.webtoonId.toString().substring(5, 13)}',
                     ),
                   );
                 },
@@ -181,7 +184,7 @@ class _KakaoDetailScreenState extends State<KakaoDetailScreen> {
                   width: 300,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.amber,
+                    color: Colors.purple,
                   ),
                   child: const Padding(
                     padding: EdgeInsets.symmetric(
