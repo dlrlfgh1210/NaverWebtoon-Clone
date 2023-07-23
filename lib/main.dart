@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naverwebtoon_clone/main_navigation_screen.dart';
+import 'package:naverwebtoon_clone/first/first_screen.dart';
 
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const MainNavigationScreen(),
+      home: const FirstScreen(),
     );
   }
 }
