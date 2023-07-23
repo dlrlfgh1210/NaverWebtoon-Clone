@@ -128,7 +128,7 @@ class _KakaoPageDetailScreenState extends State<KakaoPageDetailScreen> {
                     ],
                   ),
                   const SizedBox(
-                    height: 350,
+                    height: 280,
                   ),
                   GestureDetector(
                     onTap: () {

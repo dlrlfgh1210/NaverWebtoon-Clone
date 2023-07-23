@@ -24,18 +24,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final Future<List<TodayWebtoonModel>> monday = HomeApiService.getMondayWebtoons();
-  final Future<List<TodayWebtoonModel>> tuesday =
-  HomeApiService.getTuesdayWebtoons();
-  final Future<List<TodayWebtoonModel>> wednesday =
-  HomeApiService.getWednesdayWebtoons();
-  final Future<List<TodayWebtoonModel>> thursday =
-  HomeApiService.getThursdayWebtoons();
+  final Future<List<TodayWebtoonModel>> tuesday = HomeApiService.getTuesdayWebtoons();
+  final Future<List<TodayWebtoonModel>> wednesday = HomeApiService.getWednesdayWebtoons();
+  final Future<List<TodayWebtoonModel>> thursday = HomeApiService.getThursdayWebtoons();
   final Future<List<TodayWebtoonModel>> friday = HomeApiService.getFridayWebtoons();
-  final Future<List<TodayWebtoonModel>> saturday =
-  HomeApiService.getSaturdayWebtoons();
+  final Future<List<TodayWebtoonModel>> saturday = HomeApiService.getSaturdayWebtoons();
   final Future<List<TodayWebtoonModel>> sunday = HomeApiService.getSundayWebtoons();
-  final Future<List<TodayWebtoonModel>> finished =
-  HomeApiService.getFinishedWebtoons();
+  final Future<List<TodayWebtoonModel>> finished = HomeApiService.getFinishedWebtoons();
   final Future<List<TodayWebtoonModel>> daily = HomeApiService.getDailyWebtoons();
 
   int currentPageIndex = 0;
@@ -101,11 +96,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Icon(Icons.cookie, color: Colors.amber, size: 20),
                   ),
                  const SizedBox(
-                   width: 40,
+                   width: 70,
                  ),
                  const CategorySelect(),
                   const SizedBox(
-                    width: 40,
+                    width: 70,
                   ),
                   IconButton(
                     onPressed: () {

@@ -172,7 +172,7 @@ class _CategorySelectState extends State<CategorySelect> {
                 },
               );
             },
-            icon: const Icon(Icons.arrow_downward, color: Colors.black,))
+            icon: const Icon(Icons.arrow_downward, color: Colors.black,),)
       ],
     );
   }
